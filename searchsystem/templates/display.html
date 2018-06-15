@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Flat - Responsive HTML Template</title>
+<!--
+Flat Template
+http://www.templatemo.com/tm-491-flat
+-->
+    <!-- load stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">    <!-- Google web font "Open Sans" -->    
+    <link rel="stylesheet" href="../static/html/font-awesome-4.6.3/css/font-awesome.min.css">            <!-- Font awesome -->
+    <link rel="stylesheet" href="../static/html/css/bootstrap.min.css">                                  <!-- Bootstrap style -->
+    <link rel="stylesheet" href="../static/html/css/hero-slider-style.css">                              <!-- Hero slider style (https://codyhouse.co/gem/hero-slider/) -->
+    <link rel="stylesheet" href="../static/html/css/magnific-popup.css">                                 <!-- Magnific popup style (http://dimsemenov.com/plugins/magnific-popup/) -->
+    
+    <link rel="stylesheet" href="../static/html/css/templatemo-style.css">                               <!-- Templatemo style -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    function addclick(){
+    	var rows = document.getElementById("table1").rows;
+    	if(rows.length>0){
+    	for(var i=1;i<rows.length;i++){
+    	(function(i){
+    	var temp = rows[i].cells[1].innerHTML;
+    	var obj =rows[i].cells[1];
+    	obj.onclick=function(){
+    	var post_data={
+    	"name": temp,
+   		"id":rows[i].cells[0].innerHTML, 	
+   		"author":rows[i].cells[3].innerHTML, 	
+    	};
+    	$.ajax({
+    		url: {% url "getstatus" %},
+    		type:"POST",
+    		data: post_data,
+    		async: false,
+    		success: function(data){
+    		var temp_data = JSON.parse(data);
+    		window.location.href="/getbrief/?p1="+temp_data['id']+"&p2="+temp_data['name']+"&p3="+temp_data['author'];
+    		
+    		}
+    	});
+    	};
+    	})(i);
+    	
+    	}
+    	}
+    }
+    	window.onload=function(){addclick();}
+    </script>
+</head>
+
+    <body>
+                      
+        <!-- Content -->
+        <div class="cd-hero">
+
+            <!-- Navigation -->        
+            <div class="cd-slider-nav">
+                <nav class="navbar">
+
+                    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar">
+                        &#9776;
+                    </button>
+                    <div class="collapse navbar-toggleable-sm text-xs-center text-uppercase tm-navbar" id="tmNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item active selected">
+                                <a class="nav-link" href="#0" data-no="1"> results<span class="sr-only">(current)</span></a>
+                            </li>
+                            
+
+                        </ul>
+                    </div>
+                </nav>
+            </div> 
+
+            <ul class="cd-hero-slider">  <!-- autoplay -->
+
+                <li class="selected">
+                    <div class="cd-full-width">
+
+                        <div class="container-fluid js-tm-page-content" data-page-no="2">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                     <h2 class="tm-site-name">
+                                     	relevant results:
+                                     </h2>
+                                    <div class="tm-2-col-container">
+
+                                        <div class="tm-bg-white-translucent text-xs-left tm-textbox tm-1-col-textbox">
+
+                                      <table id="table1" border="3" cellpadding="10px">
+                                      <thead>
+                                  		<th>id</th>
+                                      	<th>title</th>                                      	
+                                      	<th>category</th>
+                                      	<th>writer</th>
+
+                                       </thead>
+                                       <tbody> 	
+                                        	{% for line in data %}
+                                        	<tr>
+                                        	    <td class="tm-text" width="300" height="50">{{line.id}}</td>
+                                        		<td class="tm-text" width="300" height="50">{{line.title}}</td>
+                                        		<td class="tm-text" width="300" height="50">{{line.cat}}</td>
+                                        		<td class="tm-text" width="300" height="50">{{line.writer}}</td>
+ 
+
+                                        	</tr>
+                                        	{% endfor %}
+                                        	</tbody>
+                        			</table>
+                                    
+                                        </div>
+                                       
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                            <button type="submit" class="pull-xs-middle tm-submit-btn" onclick="javascript:history.back();">back</button>
+                                 </div>
+                            </div>
+                        </div>
+                                                
+                    </div> <!-- .cd-full-width -->
+
+                </li>
+
+
+            </ul> <!-- .cd-hero-slider -->
+            
+                    
+        </div> <!-- .cd-hero -->
+        
+
+        <!-- Preloader, https://ihatetomatoes.net/create-custom-preloading-screen/ -->
+        <div id="loader-wrapper">
+            
+            <div id="loader"></div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+
+        </div>
+        
+        <!-- load JS files -->
+        <script src="../static/html/js/jquery-1.11.3.min.js"></script>         <!-- jQuery (https://jquery.com/download/) -->
+        <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> <!-- Tether for Bootstrap (http://stackoverflow.com/questions/34567939/how-to-fix-the-error-error-bootstrap-tooltips-require-tether-http-github-h) --> 
+        <script src="../static/html/js/bootstrap.min.js"></script>             <!-- Bootstrap js (v4-alpha.getbootstrap.com/) -->
+        <script src="../static/html/js/hero-slider-main.js"></script>          <!-- Hero slider (https://codyhouse.co/gem/hero-slider/) -->
+        <script src="../static/html/js/jquery.magnific-popup.min.js"></script> <!-- Magnific popup (http://dimsemenov.com/plugins/magnific-popup/) -->
+        
+        <script>
+
+            function adjustHeightOfPage(pageNo) {
+               
+                // Get the page height
+                var totalPageHeight = 15 + $('.cd-slider-nav').height()
+                                        + $(".cd-hero-slider li:nth-of-type(" + pageNo + ") .js-tm-page-content").height() + 160
+                                        + $('.tm-footer').height();
+
+                // Adjust layout based on page height and window height
+                if(totalPageHeight > $(window).height()) 
+                {
+                    $('.cd-hero-slider').addClass('small-screen');
+                    $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", totalPageHeight + "px");
+                }
+                else 
+                {
+                    $('.cd-hero-slider').removeClass('small-screen');
+                    $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", "100%");
+                }
+
+            }
+
+            /*
+                Everything is loaded including images.
+            */
+            $(window).load(function(){
+
+                adjustHeightOfPage(1); // Adjust page height
+
+                /* Gallery pop up
+                -----------------------------------------*/
+                $('.tm-img-gallery').magnificPopup({
+                    delegate: 'a', // child items selector, by clicking on it popup will open
+                    type: 'image',
+                    gallery:{enabled:true}                
+                });
+
+                /* Collapse menu after click 
+                -----------------------------------------*/
+                $('#tmNavbar a').click(function(){
+                    $('#tmNavbar').collapse('hide');
+
+                    adjustHeightOfPage($(this).data("no")); // Adjust page height       
+                });
+
+                /* Browser resized 
+                -----------------------------------------*/
+                $( window ).resize(function() {
+                    var currentPageNo = $(".cd-hero-slider li.selected .js-tm-page-content").data("page-no");
+                    adjustHeightOfPage( currentPageNo );
+                });
+        
+                // Remove preloader
+                // https://ihatetomatoes.net/create-custom-preloading-screen/
+                $('body').addClass('loaded');
+                           
+            });
+
+        </script>             
+
+</body>
+</html>
